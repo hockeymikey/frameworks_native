@@ -256,6 +256,10 @@ public:
     virtual void notifySwitch(nsecs_t when,
             uint32_t switchValues, uint32_t switchMask, uint32_t policyFlags) = 0;
 
+
+    /* Poke user activity for an event dispatched to a window. */
+    virtual void pokeUserActivity(nsecs_t eventTime, int32_t eventType, int32_t keyCode) = 0;
+
     /* Checks whether a given application pid/uid has permission to inject input events
      * into other applications.
      *
@@ -1045,9 +1049,6 @@ private:
     void addWindowTargetLocked(const sp<InputWindowHandle>& windowHandle,
             int32_t targetFlags, BitSet32 pointerIds, Vector<InputTarget>& inputTargets);
     void addMonitoringTargetsLocked(Vector<InputTarget>& inputTargets);
-
-    /* Poke user activity for an event dispatched to a window. */
-    virtual void pokeUserActivity(nsecs_t eventTime, int32_t eventType, int32_t keyCode) = 0;
 
     void pokeUserActivityLocked(const EventEntry* eventEntry);
     bool checkInjectionPermission(const sp<InputWindowHandle>& windowHandle,

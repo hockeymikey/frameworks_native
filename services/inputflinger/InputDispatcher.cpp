@@ -3784,7 +3784,14 @@ bool InputDispatcher::afterMotionEventLockedInterruptible(const sp<Connection>& 
 void InputDispatcher::doPokeUserActivityLockedInterruptible(CommandEntry* commandEntry) {
     mLock.unlock();
 
-    mPolicy->pokeUserActivity(commandEntry->eventTime, commandEntry->userActivityEventType);
+    int32_t keyCode = AKEYCODE_UNKNOWN;
+
+    if (commandEntry->userActivityEventType == USER_ACTIVITY_EVENT_BUTTON &&
+            commandEntry->keyEntry) {
+        keyCode = commandEntry->keyEntry->keyCode;
+    }
+
+    mPolicy->pokeUserActivity(commandEntry->eventTime, commandEntry->userActivityEventType, keyCode);
 
     mLock.lock();
 }

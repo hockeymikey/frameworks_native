@@ -1050,6 +1050,7 @@ private:
     void addMonitoringTargetsLocked(Vector<InputTarget>& inputTargets);
 
     virtual void pokeUserActivity(nsecs_t eventTime, int32_t eventType, int32_t keyCode) = 0;
+    void pokeUserActivityLocked(const EventEntry* eventEntry);
     bool checkInjectionPermission(const sp<InputWindowHandle>& windowHandle,
             const InjectionState* injectionState);
     bool isWindowObscuredAtPointLocked(const sp<InputWindowHandle>& windowHandle,
